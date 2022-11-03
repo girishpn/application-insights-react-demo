@@ -23,17 +23,17 @@ jobs:
       
       - name: Setup npm build
         uses: microsoft/setup-msbuild@v1.0.2
-	  - run: | 
-		  npm install
-		  npm start
-		  npm run build&deploy
-		  npm run test
+      - run: | 
+	  npm install
+	  npm start
+	  npm run build
+	      
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: webtestreact-dev
           path: '/webtestreact-dev/**'		  
-	  - name: Download artifact from build job
+      - name: Download artifact from build job
         uses: actions/download-artifact@v3
         with:
           name: webtestreact-dev
