@@ -15,7 +15,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: '/site/wwwroot/webtestreact-dev/'      
   NODE_VERSION: '14.x'                
 jobs:
-  build&deploy:
+  buildanddeploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -23,29 +23,27 @@ jobs:
       uses: actions/setup-node@v1
       with:
       node-version: 14.5
-    - name: build npm 
+    - name: npm install and build
       run: |
         npm install
-	npm start
-
-    - run: npm run build
-	
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: webtestreact-dev
-          path: '/webtestreact-dev/**'		  
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v3
-        with:
-          name: webtestreact-dev
-          path: '/webtestreact-dev/'
-      - name: Sync Files
-        uses: SamKirkland/FTP-Deploy-Action@4.3.2
-        with: 
-          server: waws-prod-dm1-303.ftp.azurewebsites.windows.net
-          username: webtestreact\$webtestreact
-          password: ${{ secrets.ftp_password }}
-          protocol: ftps
-          local-dir: D:/webtestreact-dev/
-          server-dir: /site/wwwroot/webtestreact-dev/
+	npm run build --if-present
+	npm run test --if-present
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: webtestreact-dev
+        path: '/webtestreact-dev/**'		  
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+         name: webtestreact-dev
+         path: '/webtestreact-dev/'
+    - name: Sync Files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.2
+      with: 
+         server: waws-prod-dm1-303.ftp.azurewebsites.windows.net
+         username: webtestreact\$webtestreact
+         password: ${{ secrets.ftp_password }}
+         protocol: ftps
+         local-dir: D:/webtestreact-dev/
+         server-dir: /site/wwwroot/webtestreact-dev/
