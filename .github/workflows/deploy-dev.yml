@@ -22,13 +22,13 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: 14
+        node-version: 16
     - name: install and build npm
       run: | 
         npm install
         npm run build
         npm run test
-      working-directory: webtestreact-dev  
+      working-directory: /webtestreact-dev/  
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
