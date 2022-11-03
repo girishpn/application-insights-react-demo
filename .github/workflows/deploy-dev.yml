@@ -23,11 +23,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
       node-version: 14.5
-    - name: npm install and build
-      run: |
+    - name: install and build npm
+      run: | 
         npm install
-	npm run build --if-present
-	npm run test --if-present
+        npm run build
+        npm run test
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
       with:
