@@ -20,12 +20,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Setup npm build
-        uses: microsoft/setup-msbuild@v1.0.2
-      - run: | 
-	  npm install
-	  npm start
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+	with:
+	node-version:14.5
+
+      - name: build npm 
+	run: |
+	  npm install 
+          npm start
 	  npm run build
 	      
       - name: Upload artifact for deployment job
