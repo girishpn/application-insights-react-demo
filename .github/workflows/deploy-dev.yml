@@ -48,5 +48,5 @@ jobs:
          username: webtestreact\$webtestreact
          password: ${{ secrets.ftp_password }}
          protocol: ftps
-         local-dir: D:/webtestreact-dev/
+         local-dir: /webtestreact-dev/
          server-dir: /site/wwwroot/webtestreact-dev/
