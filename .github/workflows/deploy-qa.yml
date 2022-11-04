@@ -42,7 +42,7 @@ jobs:
          name: webtestreact-qa
          path: '/webtestreact-qa/'
     - name: Sync Files
-      uses: SamKirkland/FTP-Deploy-Action@4.2.0
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
       with: 
          server: waws-prod-dm1-303.ftp.azurewebsites.windows.net
          username: webtestreact\$webtestreact
