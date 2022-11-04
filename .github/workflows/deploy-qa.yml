@@ -1,0 +1,54 @@
+
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy ASP app to Azure Web App - webtestgp1
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+env:
+  AZURE_WEBAPP_NAME: webtestreact   
+  AZURE_WEBAPP_PACKAGE_PATH: '/site/wwwroot/webtestreact-dev/'      
+  NODE_VERSION: '14.x'                
+jobs:
+  buildanddeploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: install and build npm
+      run: | 
+        sudo mkdir /webtestreact-qa
+        sudo chmod 777 /webtestreact-qa
+        npm install
+        npm run build
+        npm run test
+ #     working-directory: /webtestreact-qa/  
+    - name: Upload artifact for deployment job
+      uses: actions/upload-artifact@v3
+      with:
+        name: webtestreact-qa
+        path: './build/*'		  
+    - name: Download artifact from build job
+      uses: actions/download-artifact@v3
+      with:
+         name: webtestreact-qa
+         path: '/webtestreact-qa/'
+    - name: Sync Files
+      uses: SamKirkland/FTP-Deploy-Action@4.1.0
+      with: 
+         server: waws-prod-dm1-303.ftp.azurewebsites.windows.net
+         username: webtestreact\$webtestreact
+         password: ${{ secrets.ftp_password }}
+         protocol: ftps
+         local-dir: /webtestreact-qa/
+         server-dir: /site/wwwroot/webtestreact-qa/
+         log-level: verbose
+
