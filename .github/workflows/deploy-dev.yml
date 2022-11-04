@@ -50,3 +50,4 @@ jobs:
          protocol: ftps
          local-dir: /webtestreact-dev/
          server-dir: /site/wwwroot/webtestreact-dev/
+         log-level: verbose
