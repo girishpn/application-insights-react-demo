@@ -8,7 +8,7 @@ name: Build and deploy ASP app to Azure Web App - webtestgp1
 on:
   push:
     branches:
-      - dev
+      - qa
   workflow_dispatch:
 env:
   AZURE_WEBAPP_NAME: webtestreact   
